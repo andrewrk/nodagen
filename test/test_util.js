@@ -101,15 +101,14 @@ describe("FileHandling", function() {
     //    o = self.file('abcdefg')
     //    self.assertRaises(AssertionError, delete_bytes, o, 4, -8)
   });
-  it.skip("test_insert_6106_79_51760", function() {
-    //def test_insert_6106_79_51760(self):
-    //    # This appears to be due to ANSI C limitations in read/write on rb+
-    //    # files. The problematic behavior only showed up in our mmap fallback
-    //    # code for transfers of this or similar sizes. 
-    //    data = ''.join(map(str, range(12574))) # 51760 bytes
-    //    o = self.file(data)
-    //    insert_bytes(o, 6106, 79)
-    //    self.failUnless(data[:6106+79] + data[79:] == self.read(o))
+  it("test_insert_6106_79_51760", function() {
+    // This appears to be due to ANSI C limitations in read/write on rb+
+    // files. The problematic behavior only showed up in our mmap fallback
+    // code for transfers of this or similar sizes.
+    var data = specialDataFromRange();
+    var o = file(data);
+    insertBytesSync(o, 6106, 79);
+    assert.strictEqual(data.substring(0, 6106+79) + data.substring(79), read(o));
   });
   it.skip("test_delete_6106_79_51760", function() {
     //def test_delete_6106_79_51760(self):
@@ -186,5 +185,15 @@ function ss(s, n) {
   for (var i = 0; i < n; ++i) {
     result += s;
   }
+  return result;
+}
+function specialDataFromRange() {
+  // ported from python code:
+  // ''.join(map(str, range(12574))) # 51760 bytes
+  var result = "";
+  for (var i = 0; i < 12574; ++i) {
+    result += i;
+  }
+  assert.strictEqual(result.length, 51760);
   return result;
 }

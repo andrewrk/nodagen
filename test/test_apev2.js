@@ -246,25 +246,15 @@ function apev2Test(beforeFn) {
       assert.equal(this.audio.getItem("test"), "foobar\x00quuxbarz");
       assert.ok(this.audio.getItem("test") instanceof apev2.APETextValue);
     });
-    it.skip("guess_utf8", function() {
-      //def test_guess_utf8(self):
-      //    from mutagen.apev2 import APETextValue
-      //    self.audio["test"] = "foobar"
-      //    self.failUnlessEqual(self.audio["test"], "foobar")
-      //    self.failUnless(isinstance(self.audio["test"], APETextValue))
-
+    it("guess_not_utf8", function() {
+      this.audio.setItem("test", new Buffer("\xa4woo", "ascii"));
+      assert.ok(this.audio.getItem("test") instanceof apev2.APEBinaryValue);
+      assert.strictEqual(this.audio.getItem("test").value.length, 4);
     });
-    it.skip("guess_not_utf8", function() {
-      //def test_guess_not_utf8(self):
-      //    from mutagen.apev2 import APEBinaryValue
-      //    self.audio["test"] = "\xa4woo"
-      //    self.failUnless(isinstance(self.audio["test"], APEBinaryValue))
-      //    self.failUnlessEqual(4, len(self.audio["test"]))
-    });
-    it.skip("bad_value_type", function() {
-      //def test_bad_value_type(self):
-      //    from mutagen.apev2 import APEValue
-      //    self.failUnlessRaises(ValueError, APEValue, "foo", 99)
+    it("bad_value_type", function() {
+      assert.throws(function() {
+        apev2.APEValue("foo", 99);
+      }, /AssertionError/);
     });
     it.skip("module_delete_empty", function() {
       //def test_module_delete_empty(self):

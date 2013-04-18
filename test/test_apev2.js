@@ -343,9 +343,9 @@ describe("APEv2WithLyrics2", function() {
     this.tag = new APEv2(LYRICS2);
   });
   it("values", function() {
-    assert.strictEqual(this.tag.getItem("MP3GAIN_MINMAX"), "000,179");
-    assert.strictEqual(this.tag.getItem("REPLAYGAIN_TRACK_GAIN"), "-4.080000 dB");
-    assert.strictEqual(this.tag.getItem("REPLAYGAIN_TRACK_PEAK"), "1.008101");
+    assert.equal(this.tag.getItem("MP3GAIN_MINMAX"), "000,179");
+    assert.equal(this.tag.getItem("REPLAYGAIN_TRACK_GAIN"), "-4.080000 dB");
+    assert.equal(this.tag.getItem("REPLAYGAIN_TRACK_PEAK"), "1.008101");
   });
 });
 

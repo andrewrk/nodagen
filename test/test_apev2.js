@@ -36,8 +36,8 @@ describe("APEWriter", apeWriterTest(apeWriterTestSetup, function() {
   var tag = new APEv2(filename);
   tag.save();
   tag = new APEv2(filename);
-  assert.strictEqual(tag.getItem("album"), "Mutagen tests");
-  var justtagsize = fs.statsSync(SAMPLE + ".justtag").size;
+  assert.equal(tag.getItem("album"), "Mutagen tests");
+  var justtagsize = fs.statSync(SAMPLE + ".justtag").size;
   var othersize = fs.statSync(filename).size;
   assert.strictEqual(justtagsize, othersize - ("tag garbage".length * 1000));
 }));
@@ -101,8 +101,8 @@ function apeWriterTestSetup(done) {
 }
 function apeWriterTest(beforeFn, tagAtStartWriteFn) {
   return function() {
-    before(beforeFn);
-    after(function() {
+    beforeEach(beforeFn);
+    afterEach(function() {
       fs.unlinkSync(SAMPLE + ".new");
       fs.unlinkSync(BROKEN + ".new");
       fs.unlinkSync(SAMPLE + ".justtag");
@@ -226,8 +226,8 @@ describe("APEv2ThenID3v1", apev2Test(function(done) {
 
 function apev2Test(beforeFn) {
   return function() {
-    before(beforeFn);
-    after(function() {
+    beforeEach(beforeFn);
+    afterEach(function() {
       fs.unlinkSync(this.filename);
     });
     it.skip("invalid_key", function() {
@@ -339,7 +339,7 @@ function apev2Test(beforeFn) {
 }
 
 describe("APEv2WithLyrics2", function() {
-  before(function() {
+  beforeEach(function() {
     this.tag = new APEv2(LYRICS2);
   });
   it("values", function() {
@@ -351,7 +351,7 @@ describe("APEv2WithLyrics2", function() {
 
 describe("APEBinaryValue", function() {
   var BV = apev2.APEBinaryValue;
-  before(function() {
+  beforeEach(function() {
     this.sample = "\x12\x45\xde";
     this.value = new apev2.APEValue(this.sample, apev2.BINARY);
   });
@@ -371,7 +371,7 @@ describe("APEBinaryValue", function() {
 
 describe("APETextValue", function() {
   var TV = apev2.APETextValue;
-  before(function() {
+  beforeEach(function() {
     this.sample = ["foo", "bar", "baz"];
     this.value = new apev2.APEValue(this.sample.join("\0"), apev2.TEXT);
   });
@@ -403,7 +403,7 @@ describe("APETextValue", function() {
 
 describe("APEExtValue", function() {
   var EV = apev2.APEExtValue;
-  before(function() {
+  beforeEach(function() {
     this.sample = "http://foo";
     this.value = new apev2.APEValue(
         this.sample, apev2.EXTERNAL);
@@ -423,7 +423,7 @@ describe("APEExtValue", function() {
 });
 
 describe("APEv2File", function() {
-  before(function() {
+  beforeEach(function() {
     this.audio = new APEv2File(path.join(data, "click.mpc"));
   });
   it.skip("add_tags", function() {

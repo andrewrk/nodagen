@@ -7,7 +7,7 @@ var nodagen = require('../')
 
 describe("FileType", function() {
   var vorbis;
-  before(function() {
+  beforeEach(function() {
     vorbis = file(path.join(data, "empty.ogg"));
   });
   it("delitem_not_there", function() {

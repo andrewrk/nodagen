@@ -168,7 +168,7 @@ describe("FileUpperExt", function() {
     //[path.join(data, "silence-44-s.flac"), FLAC],
   ];
   var checks;
-  before(function(done) {
+  beforeEach(function(done) {
     checks = [];
     var batch = new Batch();
     FILES.forEach(function(item) {
@@ -186,7 +186,7 @@ describe("FileUpperExt", function() {
     });
     batch.end(done);
   });
-  after(function() {
+  afterEach(function() {
     checks.forEach(function(item) {
       fs.unlinkSync(item[0]);
     });

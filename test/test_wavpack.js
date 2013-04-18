@@ -6,7 +6,7 @@ var path = require('path')
 
 describe("WavPack", function() {
   var audio = null;
-  before(function() {
+  beforeEach(function() {
     audio = new WavPack(path.join(data, "silence-44-s.wv"));
   });
   it("channels", function() {

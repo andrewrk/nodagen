@@ -11,7 +11,7 @@ This is a direct port of mutagen to node.js. I plan to do the port in 3 steps.
 3. Refactor the hell out of the code and switch to an API that makes sense for
    node. Once the tests are again passing, this will be fast, pretty, clean,
    and have a new API.
-4. Switch license from GPL to BSD. I think we can do this once none of the code
+4. Switch license from GPL to BSD? Maybe we can do this once none of the code
    at all resembles the old code.
 
 ## Current Status
@@ -39,7 +39,7 @@ Working towards step 1:
  * [ ] - True Audio
  * [~] - WavPack
 
-Progress by lines of code: 1004 / 15588 = 6%
+Progress by lines of code: 2111 / 15588 = 14%
 
 ### Key
 

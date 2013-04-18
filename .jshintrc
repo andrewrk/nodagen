@@ -7,7 +7,7 @@
     // Predefined globals whom JSHint will ignore.
     "browser"       : true,   // Standard browser globals e.g. `window`, `document`.
 
-    "predef": ["before", "after", "describe", "it"],
+    "predef": ["before", "after", "describe", "it", "beforeEach", "afterEach"],
 
     "node"          : true,
     "rhino"         : false,

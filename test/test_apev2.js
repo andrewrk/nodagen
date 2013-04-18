@@ -257,25 +257,22 @@ function apev2Test(beforeFn) {
       }, /AssertionError/);
     });
     it.skip("module_delete_empty", function() {
-      //def test_module_delete_empty(self):
-      //    from mutagen.apev2 import delete
-      //    delete(os.path.join("tests", "data", "emptyfile.mp3"))
+      apev2.delete(path.join(data, "emptyfile.mp3"));
     });
-    it.skip("invalid", function() {
-      //def test_invalid(self):
-      //    self.failUnlessRaises(IOError, mutagen.apev2.APEv2, "dne")
-
+    it("invalid", function() {
+      assert.throws(function() {
+        var x = new apev2.APEv2("dne");
+      }, /ENOENT/);
     });
-    it.skip("no_tag", function() {
-      //def test_no_tag(self):
-      //    self.failUnlessRaises(IOError, mutagen.apev2.APEv2,
-      //                        os.path.join("tests", "data", "empty.mp3"))
+    it("no_tag", function() {
+      assert.throws(function() {
+        var x = new apev2.APEv2(path.join(data, "emptyfile.mp3"));
+      }, /No APE tag found/);
     });
-    it.skip("cases", function() {
-      //def test_cases(self):
-      //    self.failUnlessEqual(self.audio["artist"], self.audio["ARTIST"])
-      //    self.failUnless("artist" in self.audio)
-      //    self.failUnless("artisT" in self.audio)
+    it("cases", function() {
+      assert.strictEqual(this.audio.getItem("artist"), this.audio.getItem("ARTIST"));
+      assert.ok(this.audio.has_key("artist"));
+      assert.ok(this.audio.has_key("artisT"));
     });
     it.skip("keys", function() {
       //def test_keys(self):

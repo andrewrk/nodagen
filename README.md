@@ -39,6 +39,8 @@ Working towards step 1:
  * [ ] - True Audio
  * [~] - WavPack
 
+Progress by lines of code: 1004 / 15588 = 6%
+
 ### Key
 
  * `~` = code is ported. not all tests pass.

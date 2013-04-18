@@ -111,15 +111,14 @@ describe("FileHandling", function() {
     insertBytesSync(o, 6106, 79);
     assert.strictEqual(data.substring(0, 6106+79) + data.substring(79), read(o));
   });
-  it.skip("test_delete_6106_79_51760", function() {
-    //def test_delete_6106_79_51760(self):
-    //    # This appears to be due to ANSI C limitations in read/write on rb+
-    //    # files. The problematic behavior only showed up in our mmap fallback
-    //    # code for transfers of this or similar sizes. 
-    //    data = ''.join(map(str, range(12574))) # 51760 bytes
-    //    o = self.file(data[:6106+79] + data[79:])
-    //    delete_bytes(o, 6106, 79)
-    //    self.failUnless(data == self.read(o))
+  it("test_delete_6106_79_51760", function() {
+    // This appears to be due to ANSI C limitations in read/write on rb+
+    // files. The problematic behavior only showed up in our mmap fallback
+    // code for transfers of this or similar sizes. 
+    var data = specialDataFromRange();
+    var o = file(data.substring(0, 6106+79) + data.substring(79));
+    deleteBytesSync(o, 6106, 79);
+    assert.strictEqual(data, read(o));
   });
   it.skip("many_changes", function() {
     //# Generate a bunch of random insertions, apply them, delete them,

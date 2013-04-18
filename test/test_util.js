@@ -11,63 +11,57 @@ describe("FileHandling", function() {
     insertBytesSync(o, 8, 0);
     assert.strictEqual(ss("\x00", 8), read(o));
   });
-  it.skip("insert_before_one", function() {
-    //def test_insert_before_one(self):
-    //    o = self.file('a')
-    //    insert_bytes(o, 8, 0)
-    //    self.assertEquals('a' + '\x00' * 7 + 'a', self.read(o))
+  it("insert_before_one", function() {
+    var o = file("a");
+    insertBytesSync(o, 8, 0);
+    assert.strictEqual('a' + ss("\x00", 7) + 'a', read(o));
   });
-  it.skip("insert_after_one", function() {
-    //def test_insert_after_one(self):
-    //    o = self.file('a')
-    //    insert_bytes(o, 8, 1)
-    //    self.assertEquals('a' + '\x00' * 8, self.read(o))
+  it("insert_after_one", function() {
+    var o = file('a');
+    insertBytesSync(o, 8, 1);
+    assert.strictEqual('a' + ss('\x00', 8), read(o));
   });
-  it.skip("smaller_than_file_middle", function() {
-    //def test_smaller_than_file_middle(self):
-    //    o = self.file('abcdefghij')
-    //    insert_bytes(o, 4, 4)
-    //    self.assertEquals('abcdefghefghij', self.read(o))
+  it("smaller_than_file_middle", function() {
+    var o = file('abcdefghij');
+    insertBytesSync(o, 4, 4);
+    assert.strictEqual('abcdefghefghij', read(o));
   });
-  it.skip("smaller_than_file_to_end", function() {
-    //def test_smaller_than_file_to_end(self):
-    //    o = self.file('abcdefghij')
-    //    insert_bytes(o, 4, 6)
-    //    self.assertEquals('abcdefghijghij', self.read(o))
+  it("smaller_than_file_to_end", function() {
+    var o = file('abcdefghij');
+    insertBytesSync(o, 4, 6);
+    assert.strictEqual('abcdefghijghij', read(o));
   });
-  it.skip("smaller_than_file_across_end", function() {
-    //def test_smaller_than_file_across_end(self):
-    //    o = self.file('abcdefghij')
-    //    insert_bytes(o, 4, 8)
-    //    self.assertEquals('abcdefghij\x00\x00ij', self.read(o))
+  it("smaller_than_file_across_end", function() {
+    var o = file('abcdefghij');
+    insertBytesSync(o, 4, 8);
+    assert.strictEqual('abcdefghij\x00\x00ij', read(o));
   });
-  it.skip("smaller_than_file_at_end", function() {
-    //def test_smaller_than_file_at_end(self):
-    //    o = self.file('abcdefghij')
-    //    insert_bytes(o, 3, 10)
-    //    self.assertEquals('abcdefghij\x00\x00\x00', self.read(o))
+  it("smaller_than_file_at_end", function() {
+    var o = file('abcdefghij');
+    insertBytesSync(o, 3, 10);
+    assert.strictEqual('abcdefghij\x00\x00\x00', read(o));
   });
-  it.skip("smaller_than_file_at_beginning", function() {
-    //def test_smaller_than_file_at_beginning(self):
-    //    o = self.file('abcdefghij')
-    //    insert_bytes(o, 3, 0)
-    //    self.assertEquals('abcabcdefghij', self.read(o))
+  it("smaller_than_file_at_beginning", function() {
+    var o = file('abcdefghij');
+    insertBytesSync(o, 3, 0);
+    assert.strictEqual('abcabcdefghij', read(o));
   });
-  it.skip("zero", function() {
-    //def test_zero(self):
-    //    o = self.file('abcdefghij')
-    //    self.assertRaises((AssertionError, ValueError), insert_bytes, o, 0, 1)
+  it("zero", function() {
+    var o = file('abcdefghij');
+    assert.throws(function() {
+      insertBytesSync(o, 0, 1);
+    }, /AssertionError/);
   });
-  it.skip("negative", function() {
-    //def test_negative(self):
-    //    o = self.file('abcdefghij')
-    //    self.assertRaises((AssertionError, ValueError), insert_bytes, o, 8, -1)
+  it("negative", function() {
+    var o = file('abcdefghij');
+    assert.throws(function() {
+      insertBytesSync(o, 8, -1);
+    }, /AssertionError/);
   });
   it.skip("delete_one", function() {
-    //def test_delete_one(self):
-    //    o = self.file('a')
-    //    delete_bytes(o, 1, 0)
-    //    self.assertEquals('', self.read(o))
+    var o = file('a');
+    deleteBytesSync(o, 1, 0);
+    assert.strictEqual('', read(o));
   });
   it.skip("delete_first_of_two", function() {
     //def test_delete_first_of_two(self):

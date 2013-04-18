@@ -1,24 +1,15 @@
+var temp = require("temp")
+  , fs = require("fs")
+  , assert = require("assert")
+  , _util = require("../lib/_util")
+  , insertBytesSync = _util.insertBytesSync
+  , deleteBytesSync = _util.deleteBytesSync;
 
 describe("FileHandling", function() {
-  function file(contents) {
-    //def file(self, contents):
-    //    import tempfile
-    //    temp = tempfile.TemporaryFile()
-    //    temp.write(contents)
-    //    temp.flush()
-    //    temp.seek(0)
-    //    return temp
-  }
-  function read() {
-    //def read(self, fobj):
-    //    fobj.seek(0, 0)
-    //    return fobj.read()
-  }
-  it.skip("insert_into_empty", function() {
-    //def test_insert_into_empty(self):
-    //    o = self.file('')
-    //    insert_bytes(o, 8, 0)
-    //    self.assertEquals('\x00' * 8, self.read(o))
+  it("insert_into_empty", function() {
+    var o = file('');
+    insertBytesSync(o, 8, 0);
+    assert.strictEqual(ss("\x00", 8), read(o));
   });
   it.skip("insert_before_one", function() {
     //def test_insert_before_one(self):
@@ -182,3 +173,24 @@ describe("FileHandling", function() {
     //        self.failUnless(fobj.read() == data)
   });
 });
+
+function file(contents) {
+  var tempfile = temp.openSync();
+  var buffer = new Buffer(contents);
+  fs.writeSync(tempfile.fd, buffer, 0, buffer.length, 0);
+  fs.fsyncSync(tempfile.fd);
+  return tempfile.fd;
+}
+function read(fobj) {
+  var stats = fs.fstatSync(fobj);
+  var buffer = new Buffer(stats.size);
+  fs.readSync(fobj, buffer, 0, buffer.length, 0);
+  return buffer.toString('utf8');
+}
+function ss(s, n) {
+  var result = "";
+  for (var i = 0; i < n; ++i) {
+    result += s;
+  }
+  return result;
+}

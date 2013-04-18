@@ -226,8 +226,8 @@ describe("APEv2ThenID3v1", apev2Test(function(done) {
 
 function apev2Test(beforeFn) {
   return function() {
-    beforeEach(beforeFn);
-    afterEach(function(done) {
+    before(beforeFn);
+    after(function(done) {
       fs.unlink(this.filename, done);
     });
     it("invalid_key", function() {

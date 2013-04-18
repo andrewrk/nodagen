@@ -355,17 +355,11 @@ describe("APEBinaryValue", function() {
     this.sample = "\x12\x45\xde";
     this.value = new apev2.APEValue(this.sample, apev2.BINARY);
   });
-  it.skip("type", function() {
-    //def test_type(self):
-    //    self.failUnless(isinstance(self.value, self.BV))
+  it("type", function() {
+    assert.ok(this.value instanceof BV);
   });
-  it.skip("const", function() {
-    //def test_const(self):
-    //    self.failUnlessEqual(self.sample, str(self.value))
-  });
-  it.skip("repr", function() {
-    //def test_repr(self):
-    //    repr(self.value)
+  it("const", function() {
+    assert.strictEqual(this.sample, this.value.toString());
   });
 });
 
@@ -375,29 +369,16 @@ describe("APETextValue", function() {
     this.sample = ["foo", "bar", "baz"];
     this.value = new apev2.APEValue(this.sample.join("\0"), apev2.TEXT);
   });
-  it.skip("type", function() {
-    //def test_type(self):
-    //    self.failUnless(isinstance(self.value, self.TV))
+  it("type", function() {
+    assert.ok(this.value instanceof TV);
   });
-  it.skip("list", function() {
-    //def test_list(self):
-    //    self.failUnlessEqual(self.sample, list(self.value))
+  it("toArray", function() {
+    assert.deepEqual(this.sample, this.value.toArray());
   });
-  it.skip("setitem_list", function() {
-    //def test_setitem_list(self):
-    //    self.value[2] = self.sample[2] = 'quux'
-    //    self.test_list()
-    //    self.test_getitem()
-    //    self.value[2] = self.sample[2] = 'baz'
-  });
-  it.skip("getitem", function() {
-    //def test_getitem(self):
-    //    for i in range(len(self.value)):
-    //        self.failUnlessEqual(self.sample[i], self.value[i])
-  });
-  it.skip("repr", function() {
-    //def test_repr(self):
-    //    repr(self.value)
+  it("fromArray", function() {
+    var newValue = ["a", "b", "123"];
+    this.value.fromArray(newValue);
+    assert.deepEqual(newValue, this.value.toArray());
   });
 });
 
@@ -405,32 +386,27 @@ describe("APEExtValue", function() {
   var EV = apev2.APEExtValue;
   beforeEach(function() {
     this.sample = "http://foo";
-    this.value = new apev2.APEValue(
-        this.sample, apev2.EXTERNAL);
+    this.value = new apev2.APEValue(this.sample, apev2.EXTERNAL);
   });
-  it.skip("type", function() {
-    //def test_type(self):
-    //    self.failUnless(isinstance(self.value, self.EV))
+  it("type", function() {
+    assert.ok(this.value instanceof EV);
   });
-  it.skip("const", function() {
-    //def test_const(self):
-    //    self.failUnlessEqual(self.sample, str(self.value))
-  });
-  it.skip("repr", function() {
-    //def test_repr(self):
-    //    repr(self.value)
+  it("const", function() {
+    assert.strictEqual(this.sample, this.value.toString());
   });
 });
 
 describe("APEv2File", function() {
+  var audio;
   beforeEach(function() {
-    this.audio = new APEv2File(path.join(data, "click.mpc"));
+    audio = new APEv2File(path.join(data, "click.mpc"));
   });
-  it.skip("add_tags", function() {
-    //def test_add_tags(self):
-    //    self.failUnless(self.audio.tags is None)
-    //    self.audio.add_tags()
-    //    self.failUnless(self.audio.tags is not None)
-    //    self.failUnlessRaises(ValueError, self.audio.add_tags)
+  it("add_tags", function() {
+    assert.equal(audio.tags, null);
+    audio.add_tags();
+    assert.notEqual(audio.tags, null);
+    assert.throws(function() {
+      audio.add_tags();
+    }, /AssertionError.*already has tags/);
   });
 });

@@ -1,11 +1,12 @@
 var path = require('path')
   , data = path.join(__dirname, "data")
   , assert = require('assert')
-  , WavPack = require('../').WavPack
+  , wavpack = require('../').wavpack
+  , WavPack = wavpack.WavPack
 
 describe("WavPack", function() {
   var audio = null;
-  before(function(done) {
+  before(function() {
     audio = new WavPack(path.join(data, "silence-44-s.wv"));
   });
   it("channels", function() {

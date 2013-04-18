@@ -373,8 +373,7 @@ describe("APETextValue", function() {
   var TV = apev2.APETextValue;
   before(function() {
     this.sample = ["foo", "bar", "baz"];
-    this.value = new apev2.APEValue(
-        "\0".join(this.sample), apev2.TEXT)
+    this.value = new apev2.APEValue(this.sample.join("\0"), apev2.TEXT);
   });
   it.skip("type", function() {
     //def test_type(self):

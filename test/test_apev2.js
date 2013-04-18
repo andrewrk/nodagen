@@ -227,29 +227,24 @@ describe("APEv2ThenID3v1", apev2Test(function(done) {
 function apev2Test(beforeFn) {
   return function() {
     beforeEach(beforeFn);
-    afterEach(function() {
-      fs.unlinkSync(this.filename);
+    afterEach(function(done) {
+      fs.unlink(this.filename, done);
     });
-    it.skip("invalid_key", function() {
-      //def test_invalid_key(self):
-      //    self.failUnlessRaises(
-      //        KeyError, self.audio.__setitem__, u"\u1234", "foo")
+    it("invalid_key", function() {
+      var self = this;
+      assert.throws(function() {
+        self.audio.setItem("\u1234", "foo");
+      }, /KeyError/);
     });
-    it.skip("guess_text", function() {
-      //def test_guess_text(self):
-      //    from mutagen.apev2 import APETextValue
-      //    self.audio["test"] = u"foobar"
-      //    self.failUnlessEqual(self.audio["test"], "foobar")
-      //    self.failUnless(isinstance(self.audio["test"], APETextValue))
-
+    it("guess_text", function() {
+      this.audio.setItem("test", "foobar");
+      assert.equal(this.audio.getItem("test"), "foobar");
+      assert.ok(this.audio.getItem("test") instanceof apev2.APETextValue);
     });
-    it.skip("guess_text_list", function() {
-      //def test_guess_text_list(self):
-      //    from mutagen.apev2 import APETextValue
-      //    self.audio["test"] = [u"foobar", "quuxbarz"]
-      //    self.failUnlessEqual(self.audio["test"], "foobar\x00quuxbarz")
-      //    self.failUnless(isinstance(self.audio["test"], APETextValue))
-
+    it("guess_text_list", function() {
+      this.audio.setItem("test", ["foobar", "quuxbarz"]);
+      assert.equal(this.audio.getItem("test"), "foobar\x00quuxbarz");
+      assert.ok(this.audio.getItem("test") instanceof apev2.APETextValue);
     });
     it.skip("guess_utf8", function() {
       //def test_guess_utf8(self):

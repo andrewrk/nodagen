@@ -424,7 +424,7 @@ describe("APEExtValue", function() {
 
 describe("APEv2File", function() {
   before(function() {
-    this.audio = new APEv2File("tests/data/click.mpc");
+    this.audio = new APEv2File(path.join(data, "click.mpc"));
   });
   it.skip("add_tags", function() {
     //def test_add_tags(self):

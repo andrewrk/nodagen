@@ -58,48 +58,49 @@ describe("FileHandling", function() {
       insertBytesSync(o, 8, -1);
     }, /AssertionError/);
   });
-  it.skip("delete_one", function() {
+  it("delete_one", function() {
     var o = file('a');
     deleteBytesSync(o, 1, 0);
     assert.strictEqual('', read(o));
   });
-  it.skip("delete_first_of_two", function() {
-    //def test_delete_first_of_two(self):
-    //    o = self.file('ab')
-    //    delete_bytes(o, 1, 0)
-    //    self.assertEquals('b', self.read(o))
+  it("delete_first_of_two", function() {
+    var o = file('ab');
+    deleteBytesSync(o, 1, 0);
+    assert.strictEqual('b', read(o));
   });
-  it.skip("delete_second_of_two", function() {
-    //def test_delete_second_of_two(self):
-    //    o = self.file('ab')
-    //    delete_bytes(o, 1, 1)
-    //    self.assertEquals('a', self.read(o))
+  it("delete_second_of_two", function() {
+    var o = file('ab');
+    deleteBytesSync(o, 1, 1);
+    assert.strictEqual('a', read(o));
   });
-  it.skip("delete_third_of_two", function() {
-    //def test_delete_third_of_two(self):
-    //    o = self.file('ab')
-    //    self.assertRaises(AssertionError, delete_bytes, o, 1, 2)
+  it("delete_third_of_two", function() {
+    var o = file('ab');
+    assert.throws(function() {
+      deleteBytesSync(o, 1, 2);
+    }, /AssertionError/);
   });
-  it.skip("delete_middle", function() {
-    //def test_delete_middle(self):
-    //    o = self.file('abcdefg')
-    //    delete_bytes(o, 3, 2)
-    //    self.assertEquals('abfg', self.read(o))
+  it("delete_middle", function() {
+    var o = file('abcdefg');
+    deleteBytesSync(o, 3, 2);
+    assert.strictEqual('abfg', read(o));
   });
-  it.skip("delete_across_end", function() {
-    //def test_delete_across_end(self):
-    //    o = self.file('abcdefg')
-    //    self.assertRaises(AssertionError, delete_bytes, o, 4, 8)
+  it("delete_across_end", function() {
+    var o = file('abcdefg');
+    assert.throws(function() {
+      deleteBytesSync(o, 4, 8);
+    }, /AssertionError/);
   });
-  it.skip("delete_zero", function() {
-    //def test_delete_zero(self):
-    //    o = self.file('abcdefg')
-    //    self.assertRaises(AssertionError, delete_bytes, o, 0, 3)
+  it("delete_zero", function() {
+    var o = file('abcdefg');
+    assert.throws(function() {
+      deleteBytesSync(o, 0, 3);
+    }, /AssertionError/);
   });
-  it.skip("delete_negative", function() {
-    //def test_delete_negative(self):
-    //    o = self.file('abcdefg')
-    //    self.assertRaises(AssertionError, delete_bytes, o, 4, -8)
+  it("delete_negative", function() {
+    var o = file('abcdefg');
+    assert.throws(function() {
+      deleteBytesSync(o, 4, -8);
+    }, /AssertionError/);
   });
   it("test_insert_6106_79_51760", function() {
     // This appears to be due to ANSI C limitations in read/write on rb+
@@ -176,6 +177,7 @@ function file(contents) {
 }
 function read(fobj) {
   var stats = fs.fstatSync(fobj);
+  if (stats.size === 0) return "";
   var buffer = new Buffer(stats.size);
   fs.readSync(fobj, buffer, 0, buffer.length, 0);
   return buffer.toString('utf8');

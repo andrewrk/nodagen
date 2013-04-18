@@ -11,6 +11,7 @@
   "license": "GPL",
   "devDependencies": {
     "mocha": "~1.9.0",
-    "temp": "~0.5.0"
+    "temp": "~0.5.0",
+    "ncp": "~0.4.2"
   }
 }

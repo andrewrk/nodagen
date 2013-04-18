@@ -3,7 +3,7 @@ var path = require('path')
   , assert = require('assert')
   , WavPack = require('../').WavPack
 
-describe("TWavPack", function() {
+describe("WavPack", function() {
   var audio = null;
   before(function(done) {
     audio = new WavPack(path.join(data, "silence-44-s.wv"));

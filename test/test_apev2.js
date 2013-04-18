@@ -274,19 +274,24 @@ function apev2Test(beforeFn) {
       assert.ok(this.audio.has_key("artist"));
       assert.ok(this.audio.has_key("artisT"));
     });
-    it.skip("keys", function() {
-      //def test_keys(self):
-      //    self.failUnless("Track" in self.audio.keys())
-      //    self.failUnless("AnArtist" in self.audio.values())
-
-      //    self.failUnlessEqual(
-      //        self.audio.items(), zip(self.audio.keys(), self.audio.values()))
+    it("keys", function() {
+      assert.ok(this.audio.keys().indexOf("Track") >= 0);
+      console.log("values", this.audio.values());
+      assert.ok(this.audio.values().filter(function(value) {
+        return value.toString() === "AnArtist";
+      }).length);
     });
-    it.skip("invalid_keys", function() {
-      //def test_invalid_keys(self):
-      //    self.failUnlessRaises(KeyError, self.audio.__getitem__, "\x00")
-      //    self.failUnlessRaises(KeyError, self.audio.__setitem__, "\x00", "")
-      //    self.failUnlessRaises(KeyError, self.audio.__delitem__, "\x00")
+    it("invalid_keys", function() {
+      var audio = this.audio;
+      assert.throws(function() {
+        audio.getItem("\x00");
+      }, /KeyError/);
+      assert.throws(function() {
+        audio.setItem("\x00", "");
+      }, /KeyError/);
+      assert.throws(function() {
+        audio.delItem("\x00");
+      }, /KeyError/);
     });
     it.skip("dictlike", function() {
       //def test_dictlike(self):

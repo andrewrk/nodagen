@@ -1,0 +1,12 @@
+{
+  "name": "nodagen",
+  "version": "0.0.0",
+  "description": "mutagen for node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/test.js"
+  },
+  "repository": "",
+  "author": "Andrew Kelley <superjoe30@gmail.com>",
+  "license": "GPL"
+}

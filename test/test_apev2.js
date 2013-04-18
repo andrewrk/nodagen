@@ -256,7 +256,7 @@ function apev2Test(beforeFn) {
         apev2.APEValue("foo", 99);
       }, /AssertionError/);
     });
-    it.skip("module_delete_empty", function() {
+    it("module_delete_empty", function() {
       apev2.delete(path.join(data, "emptyfile.mp3"));
     });
     it("invalid", function() {

@@ -134,22 +134,22 @@ function apeWriterTest(beforeFn, tagAtStartWriteFn) {
         assert.strictEqual(v.toString(), self.values[k]);
       });
     });
-    it.skip("size", function() {
-      //def test_size(self):
-      //    self.failUnlessEqual(
-      //        os.path.getsize(SAMPLE + ".new"),
-      //        os.path.getsize(SAMPLE) + os.path.getsize(SAMPLE + ".justtag"))
-
+    it("size", function() {
+      var sampleNewSize = fs.statSync(SAMPLE + ".new").size;
+      var sampleSize = fs.statSync(SAMPLE).size;
+      var sampleJustTagSize = fs.statSync(SAMPLE + ".justtag").size;
+      assert.strictEqual(sampleNewSize, sampleSize + sampleJustTagSize);
     });
-    it.skip("delete", function() {
-      //def test_delete(self):
-      //    mutagen.apev2.delete(SAMPLE + ".justtag")
-      //    tag = mutagen.apev2.APEv2(SAMPLE + ".new")
-      //    tag.delete()
-      //    self.failUnlessEqual(os.path.getsize(SAMPLE + ".justtag"), self.offset)
-      //    self.failUnlessEqual(os.path.getsize(SAMPLE) + self.offset,
-      //                         os.path.getsize(SAMPLE + ".new"))
-      //    self.failIf(tag)
+    it("delete", function() {
+      apev2.delete(SAMPLE + ".justtag");
+      var tag = new APEv2(SAMPLE + ".new");
+      tag.delete();
+      var sampleJustTagSize = fs.statSync(SAMPLE + ".justtag").size;
+      assert.strictEqual(sampleJustTagSize, this.offset);
+      var sampleSize = fs.statSync(SAMPLE).size;
+      var sampleNewSize = fs.statSync(SAMPLE + ".new").size;
+      assert.strictEqual(sampleSize + this.offset, sampleNewSize);
+      assert.strictEqual(tag.keys().length, 0);
     });
     it.skip("empty", function() {
       //def test_empty(self):

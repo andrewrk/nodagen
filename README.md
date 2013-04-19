@@ -37,9 +37,10 @@ Working towards step 1:
  * [ ] - Ogg Vorbis     (300 lines left)
  * [x] - Optim FROG
  * [ ] - True Audio     (117 lines left)
+ * [ ] - Vorbis         (438 lines left)
  * [x] - WavPack
 
-Progress by lines of code: 2796 / 15588 = 18%
+Progress by lines of code: 2358 / 15588 = 15%
 
 ### Key
 

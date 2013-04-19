@@ -10,7 +10,7 @@ var nodagen = require('../')
   , APEv2File = nodagen.apev2.APEv2File
   , WavPack = nodagen.wavpack.WavPack
   // TODO uncomment when implemented
-  //, OptimFROG = nodagen.optimfrog.OptimFROG
+  , OptimFROG = nodagen.optimfrog.OptimFROG
   //, Musepack = nodagen.musepack.Musepack
   //, ASF = nodagen.asf.ASF
   //, MP4 = nodagen.mp4.MP4
@@ -134,12 +134,9 @@ describe("File", function() {
     //    self.failUnless(isinstance(
     //        File(os.path.join("tests", "data", "truncated-64bit.mp4")), MP4))
   });
-  it.skip("optimfrog", function() {
-    //def test_optimfrog(self):
-    //    self.failUnless(isinstance(
-    //        File(os.path.join("tests", "data", "empty.ofr")), OptimFROG))
-    //    self.failUnless(isinstance(
-    //        File(os.path.join("tests", "data", "empty.ofs")), OptimFROG))
+  it("optimfrog", function() {
+    assert.ok(file(path.join(data, "empty.ofr")) instanceof OptimFROG);
+    assert.ok(file(path.join(data, "empty.ofs")) instanceof OptimFROG);
   });
   it.skip("asf", function() {
     //def test_asf(self):

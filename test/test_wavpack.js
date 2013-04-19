@@ -24,7 +24,7 @@ describe("WavPack", function() {
     }, /not a WavPack file/);
   });
   it("pprint", function() {
-    assert.strictEqual(audio.pprint(), 'WavPack, 3.684716553287982 seconds, 44100 Hz (audio/x-wavpack)\nAlbum=Quod Libet Test Data\nArtist=piman / jzig\nDate=2004\nGenre=Silence\nReplaygain_Album_Gain=+9.27 dB\nReplaygain_Album_Peak=0.229712820826\nReplaygain_Track_Gain=+9.27 dB\nReplaygain_Track_Peak=0.229712820826\nTitle=Silence\nTrack=02/10');
+    assert.strictEqual(audio.pprint(), 'WavPack, 3.68 seconds, 44100 Hz (audio/x-wavpack)\nAlbum=Quod Libet Test Data\nArtist=piman / jzig\nDate=2004\nGenre=Silence\nReplaygain_Album_Gain=+9.27 dB\nReplaygain_Album_Peak=0.229712820826\nReplaygain_Track_Gain=+9.27 dB\nReplaygain_Track_Peak=0.229712820826\nTitle=Silence\nTrack=02/10');
   });
   it("mime", function() {
     assert.ok(audio.mime().indexOf("audio/x-wavpack") >= 0);

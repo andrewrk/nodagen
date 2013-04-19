@@ -1,6 +1,6 @@
 # mutagen for node.js
 
-This is a direct port of mutagen to node.js. I plan to do the port in 3 steps.
+This is a direct port of mutagen to node.js. I plan to do the port in 4 steps.
 
 ## The Plan
 
@@ -35,11 +35,11 @@ Working towards step 1:
  * [ ] - Ogg Speex      (192 lines left)
  * [ ] - Ogg Theora     (188 lines left)
  * [ ] - Ogg Vorbis     (300 lines left)
- * [ ] - Optim Frog     (104 lines left)
+ * [x] - Optim FROG
  * [ ] - True Audio     (117 lines left)
  * [x] - WavPack
 
-Progress by lines of code: 2692 / 15588 = 17%
+Progress by lines of code: 2796 / 15588 = 18%
 
 ### Key
 

@@ -45,14 +45,14 @@ describe("APEWriter", apeWriterTest(apeWriterTestSetup, function() {
 
 describe("APEv2ThenID3v1Writer", apeWriterTest(function(done) {
   var self = this;
-  self.offset = 128;
   apeWriterTestSetup.call(self, function(err) {
     if (err) return done(err);
+    self.offset = 128;
     var trash = "TAG";
     for (var i = 0; i < 125; ++i) {
       trash += "\x00";
     }
-    var trashBuffer = new Buffer(trash, "ascii");
+    var trashBuffer = new Buffer(trash, "binary");
     var f = fs.openSync(SAMPLE + ".new", "a+");
     fs.writeSync(f, trashBuffer, 0, trashBuffer.length, 0);
     fs.closeSync(f);
@@ -91,7 +91,7 @@ function apeWriterTestSetup(done) {
       for (var i = 0; i < 1000; ++i) {
         garbage += "tag garbage";
       }
-      var garbageBuffer = new Buffer(garbage, "ascii");
+      var garbageBuffer = new Buffer(garbage, "binary");
       fs.writeSync(fileobj, garbageBuffer, 0, garbageBuffer.length, 0);
       fs.closeSync(fileobj);
       self.tag = new APEv2(SAMPLE + ".new");
@@ -108,7 +108,7 @@ function apeWriterTest(beforeFn, tagAtStartWriteFn) {
       fs.unlinkSync(SAMPLE + ".justtag");
       fs.unlinkSync(SAMPLE + ".tag_at_start");
     });
-    it.skip("changed", function() {
+    it("changed", function() {
       var oldSize = fs.statSync(SAMPLE + ".new").size;
       this.tag.save();
       var newSize = fs.statSync(SAMPLE + ".new").size;
@@ -215,7 +215,7 @@ describe("APEv2ThenID3v1", apev2Test(function(done) {
     for (var i = 0; i < 125; ++i) {
       trash += "\x00";
     }
-    var trashBuffer = new Buffer(trash, "ascii");
+    var trashBuffer = new Buffer(trash, "binary");
     var f = fs.openSync(self.filename, "a+");
     fs.writeSync(f, trashBuffer, 0, trashBuffer.length, 0);
     fs.closeSync(f);
@@ -247,7 +247,7 @@ function apev2Test(beforeFn) {
       assert.ok(this.audio.getItem("test") instanceof apev2.APETextValue);
     });
     it("guess_not_utf8", function() {
-      this.audio.setItem("test", new Buffer("\xa4woo", "ascii"));
+      this.audio.setItem("test", new Buffer("\xa4woo", "binary"));
       assert.ok(this.audio.getItem("test") instanceof apev2.APEBinaryValue);
       assert.strictEqual(this.audio.getItem("test").value.length, 4);
       this.audio.delItem("test");

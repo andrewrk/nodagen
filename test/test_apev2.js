@@ -114,22 +114,25 @@ function apeWriterTest(beforeFn, tagAtStartWriteFn) {
       var newSize = fs.statSync(SAMPLE + ".new").size;
       assert.strictEqual(newSize, oldSize - this.offset);
     });
-    it.skip("fix_broken", function() {
-      //def test_fix_broken(self):
-      //    # Clean up garbage from a bug in pre-Mutagen APEv2.
-      //    # This also tests removing ID3v1 tags on writes.
-      //    self.failIfEqual(os.path.getsize(OLD), os.path.getsize(BROKEN))
-      //    tag = mutagen.apev2.APEv2(BROKEN)
-      //    tag.save(BROKEN + ".new")
-      //    self.failUnlessEqual(
-      //        os.path.getsize(OLD), os.path.getsize(BROKEN+".new"))
-
+    it("fix_broken", function() {
+      // Clean up garbage from a bug in pre-Mutagen APEv2.
+      // This also tests removing ID3v1 tags on writes.
+      var oldSize = fs.statSync(OLD).size;
+      var brokenSize = fs.statSync(BROKEN).size;
+      assert.notEqual(oldSize, brokenSize);
+      var tag = new APEv2(BROKEN);
+      tag.save(BROKEN + ".new");
+      oldSize = fs.statSync(OLD).size;
+      var newBrokenSize = fs.statSync(BROKEN+".new").size;
+      assert.strictEqual(oldSize, newBrokenSize);
     });
-    it.skip("readback", function() {
-      //def test_readback(self):
-      //    for k, v in self.tag.items():
-      //        self.failUnlessEqual(str(v), self.values[k])
-
+    it("readback", function() {
+      var self = this;
+      self.tag.items().forEach(function(item) {
+        var k = item[0]
+          , v = item[1];
+        assert.strictEqual(v.toString(), self.values[k]);
+      });
     });
     it.skip("size", function() {
       //def test_size(self):

@@ -18,7 +18,7 @@ This is a direct port of mutagen to node.js. I plan to do the port in 3 steps.
 
 Working towards step 1:
 
- * [~] - APEv2          (18 tests pending)
+ * [~] - APEv2          (14 tests pending)
  * [ ] - ASF            (1011 lines left)
  * [ ] - easy ID3       (742 lines left)
  * [ ] - easy MP4       (401 lines left)

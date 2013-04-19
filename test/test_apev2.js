@@ -250,6 +250,7 @@ function apev2Test(beforeFn) {
       this.audio.setItem("test", new Buffer("\xa4woo", "ascii"));
       assert.ok(this.audio.getItem("test") instanceof apev2.APEBinaryValue);
       assert.strictEqual(this.audio.getItem("test").value.length, 4);
+      this.audio.delItem("test");
     });
     it("bad_value_type", function() {
       assert.throws(function() {
@@ -307,20 +308,18 @@ function apev2Test(beforeFn) {
       audio.setItem("Artist", s);
       assert.equal(audio.getItem("artist"), "AnArtist");
     });
-    it.skip("values", function() {
-      //def test_values(self):
-      //    self.failUnlessEqual(self.audio["artist"], self.audio["artist"])
-      //    self.failUnless(self.audio["artist"] < self.audio["title"])
-      //    self.failUnlessEqual(self.audio["artist"], "AnArtist")
-      //    self.failUnlessEqual(self.audio["title"], "Some Music")
-      //    self.failUnlessEqual(self.audio["album"], "A test case")
-      //    self.failUnlessEqual("07", self.audio["track"])
-
-      //    self.failIfEqual(self.audio["album"], "A test Case")
+    it("values", function() {
+      assert.strictEqual(this.audio.getItem("artist"), this.audio.getItem("artist"));
+      assert.ok(this.audio.getItem("artist") < this.audio.getItem("title"));
+      assert.equal(this.audio.getItem("artist"), "AnArtist");
+      assert.equal(this.audio.getItem("title"), "Some Music");
+      assert.equal(this.audio.getItem("album"), "A test case");
+      assert.equal(this.audio.getItem("track"), "07");
+      assert.notEqual(this.audio.getItem("album"), "A test Case");
     });
-    it.skip("pprint", function() {
-      //def test_pprint(self):
-      //    self.failUnless(self.audio.pprint())
+    it("pprint", function() {
+      assert.strictEqual(this.audio.pprint(),
+        'Album=A test case\nArtist=AnArtist\nTitle=Some Music\nTrack=07');
     });
   };
 }

@@ -1,4 +1,5 @@
 var nodagen = require('../')
+  , file = nodagen.file
   , path = require('path')
   , assert = require('assert')
   , fs = require('fs')
@@ -6,6 +7,8 @@ var nodagen = require('../')
   , Batch = require('batch')
   , temp = require('temp')
   , ncp = require('ncp')
+  , APEv2File = nodagen.apev2.APEv2File
+  , WavPack = nodagen.wavpack.WavPack
   // TODO uncomment when implemented
   //, OptimFROG = nodagen.optimfrog.OptimFROG
   //, Musepack = nodagen.musepack.Musepack
@@ -14,29 +17,31 @@ var nodagen = require('../')
   //, FLAC = nodagen.flac.FLAC
 
 describe("File", function() {
-  it.skip("bad", function() {
-    //def test_bad(self):
-    //    try: self.failUnless(File(devnull) is None)
-    //    except (OSError, IOError):
-    //        print "WARNING: Unable to open %s." % devnull
-    //    self.failUnless(File(__file__) is None)
+  it("bad", function() {
+    assert.equal(file("/dev/null"), null);
+    assert.equal(file(__filename), null);
   });
-  it.skip("empty", function() {
-    //def test_empty(self):
-    //    filename = os.path.join("tests", "data", "empty")
-    //    open(filename, "wb").close()
-    //    try: self.failUnless(File(filename) is None)
-    //    finally: os.unlink(filename)
+  it("empty", function() {
+    var filename = path.join(data, "empty");
+    var fd = fs.openSync(filename, "w");
+    fs.closeSync(fd);
+    try {
+      assert.equal(file(filename), null);
+    } finally {
+      fs.unlinkSync(filename);
+    }
   });
-  it.skip("not_file", function() {
-    //def test_not_file(self):
-    //    self.failUnlessRaises(EnvironmentError, File, "/dev/doesnotexist")
+  it("not_file", function() {
+    assert.throws(function() {
+      var x = file("/dev/doesnotexist");
+    }, /ENOENT/);
   });
-  it.skip("no_options", function() {
-    //def test_no_options(self):
-    //    for filename in ["empty.ogg", "empty.oggflac", "silence-44-s.mp3"]:
-    //        filename = os.path.join("tests", "data", "empty.ogg")
-    //        self.failIf(File(filename, options=[]))
+  it("no_options", function() {
+    var opts = ["empty.ogg", "empty.oggflac", "silence-44-s.mp3"];
+    opts.forEach(function(filename) {
+      filename = path.join(data, filename);
+      assert.equal(file(filename, { options: [] }), null);
+    });
   });
   it.skip("oggvorbis", function() {
     //def test_oggvorbis(self):
@@ -101,10 +106,8 @@ describe("File", function() {
     //    self.failUnless(isinstance(
     //        File(os.path.join("tests", "data", "mac-396.ape")), MonkeysAudio))
   });
-  it.skip("apev2", function() {
-    //def test_apev2(self):
-    //    self.failUnless(isinstance(
-    //        File(os.path.join("tests", "data", "oldtag.apev2")), APEv2File))
+  it("apev2", function() {
+    assert.ok(file(path.join(data, "oldtag.apev2")) instanceof APEv2File);
   });
   it.skip("tta", function() {
     //def test_tta(self):
@@ -117,10 +120,8 @@ describe("File", function() {
     //        File(os.path.join("tests", "data", "empty.tta"), easy=True),
     //        EasyTrueAudio))
   });
-  it.skip("wavpack", function() {
-    //def test_wavpack(self):
-    //    self.failUnless(isinstance(
-    //        File(os.path.join("tests", "data", "silence-44-s.wv")), WavPack))
+  it("wavpack", function() {
+    assert.ok(file(path.join(data, "silence-44-s.wv")) instanceof WavPack);
   });
   it.skip("mp4", function() {
     //def test_mp4(self):

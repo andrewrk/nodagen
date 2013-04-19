@@ -151,30 +151,26 @@ function apeWriterTest(beforeFn, tagAtStartWriteFn) {
       assert.strictEqual(sampleSize + this.offset, sampleNewSize);
       assert.strictEqual(tag.keys().length, 0);
     });
-    it.skip("empty", function() {
-      //def test_empty(self):
-      //    self.failUnlessRaises(
-      //        IOError, mutagen.apev2.APEv2,
-      //        os.path.join("tests", "data", "emptyfile.mp3"))
-
+    it("empty", function() {
+      assert.throws(function() {
+        var x = new APEv2(path.join(data, "emptyfile.mp3"));
+      }, /No APE tag found/);
     });
-    it.skip("tag_at_start", function() {
-      //def test_tag_at_start(self):
-      //    filename = SAMPLE + ".tag_at_start"
-      //    tag = mutagen.apev2.APEv2(filename)
-      //    self.failUnlessEqual(tag["album"], "Mutagen tests")
-
+    it("tag_at_start", function() {
+      var filename = SAMPLE + ".tag_at_start";
+      var tag = new APEv2(filename);
+      assert.equal(tag.getItem("album"), "Mutagen tests");
     });
     it("tag_at_start_write", tagAtStartWriteFn);
-    it.skip("tag_at_start_delete", function() {
-      //def test_tag_at_start_delete(self):
-      //    filename = SAMPLE + ".tag_at_start"
-      //    tag = mutagen.apev2.APEv2(filename)
-      //    tag.delete()
-      //    self.failUnlessRaises(IOError, mutagen.apev2.APEv2, filename)
-      //    self.failUnlessEqual(
-      //        os.path.getsize(filename), len("tag garbage") * 1000)
-
+    it("tag_at_start_delete", function() {
+      var filename = SAMPLE + ".tag_at_start";
+      var tag = new APEv2(filename);
+      tag.delete();
+      assert.throws(function() {
+        var x = new APEv2(filename);
+      }, /No APE tag found/);
+      var size = fs.statSync(filename).size;
+      assert.strictEqual(size, "tag garbage".length * 1000);
     });
     it.skip("case_preservation", function() {
       //def test_case_preservation(self):

@@ -276,7 +276,6 @@ function apev2Test(beforeFn) {
     });
     it("keys", function() {
       assert.ok(this.audio.keys().indexOf("Track") >= 0);
-      console.log("values", this.audio.values());
       assert.ok(this.audio.values().filter(function(value) {
         return value.toString() === "AnArtist";
       }).length);
@@ -293,19 +292,20 @@ function apev2Test(beforeFn) {
         audio.delItem("\x00");
       }, /KeyError/);
     });
-    it.skip("dictlike", function() {
-      //def test_dictlike(self):
-      //    self.failUnless(self.audio.get("track"))
-      //    self.failUnless(self.audio.get("Track"))
+    it("dictlike", function() {
+      assert.ok(this.audio.get("track"));
+      assert.ok(this.audio.get("Track"));
     });
-    it.skip("del", function() {
-      //def test_del(self):
-      //    s = self.audio["artist"]
-      //    del(self.audio["artist"])
-      //    self.failIf("artist" in self.audio)
-      //    self.failUnlessRaises(KeyError, self.audio.__getitem__, "artist")
-      //    self.audio["Artist"] = s
-      //    self.failUnlessEqual(self.audio["artist"], "AnArtist")
+    it("del", function() {
+      var audio = this.audio;
+      var s = audio.get("artist");
+      audio.delItem("artist");
+      assert.strictEqual(audio.keys().indexOf("artist"), -1);
+      assert.throws(function() {
+        audio.getItem("artist");
+      }, /KeyError/);
+      audio.setItem("Artist", s);
+      assert.equal(audio.getItem("artist"), "AnArtist");
     });
     it.skip("values", function() {
       //def test_values(self):

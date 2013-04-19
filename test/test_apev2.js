@@ -172,24 +172,21 @@ function apeWriterTest(beforeFn, tagAtStartWriteFn) {
       var size = fs.statSync(filename).size;
       assert.strictEqual(size, "tag garbage".length * 1000);
     });
-    it.skip("case_preservation", function() {
-      //def test_case_preservation(self):
-      //    mutagen.apev2.delete(SAMPLE + ".justtag")
-      //    tag = mutagen.apev2.APEv2(SAMPLE + ".new")
-      //    tag["FoObaR"] = "Quux"
-      //    tag.save()
-      //    tag = mutagen.apev2.APEv2(SAMPLE + ".new")
-      //    self.failUnless("FoObaR" in tag.keys())
-      //    self.failIf("foobar" in tag.keys())
-
+    it("case_preservation", function() {
+      apev2.delete(SAMPLE + ".justtag");
+      var tag = new APEv2(SAMPLE + ".new");
+      tag.setItem("FoObaR", "Quux");
+      tag.save();
+      tag = new APEv2(SAMPLE + ".new");
+      assert.notEqual(tag.keys().indexOf("FoObaR"), -1);
+      assert.equal(tag.keys().indexOf("foobar"), -1);
     });
-    it.skip("unicode_key", function() {
-      //def test_unicode_key(self):
-      //    # http://code.google.com/p/mutagen/issues/detail?id=123
-      //    tag = mutagen.apev2.APEv2(SAMPLE + ".new")
-      //    tag["abc"] = u'\xf6\xe4\xfc'
-      //    tag[u"cba"] = "abc"
-      //    tag.save()
+    it("unicode_key", function() {
+      // http://code.google.com/p/mutagen/issues/detail?id=123
+      var tag = new APEv2(SAMPLE + ".new");
+      tag.setItem("abc", "\xf6\xe4\xfc");
+      tag.setItem("cba", "abc");
+      tag.save();
     });
   };
 }

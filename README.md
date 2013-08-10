@@ -2,6 +2,9 @@
 
 This is a direct port of mutagen to node.js. I plan to do the port in 4 steps.
 
+**note** I think I will stop this project and instead contribute to
+https://github.com/leetreveil/node-musicmetadata where necessary.
+
 ## The Plan
 
 1. Get a straight up port working and passing all the tests. This will be

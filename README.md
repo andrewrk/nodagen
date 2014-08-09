@@ -2,8 +2,12 @@
 
 This is a direct port of mutagen to node.js. I plan to do the port in 4 steps.
 
-**note** I think I will stop this project and instead contribute to
-https://github.com/leetreveil/node-musicmetadata where necessary.
+**note** This project is abandoned.
+
+You may be interested in one of these projects instead:
+
+ * [node-musicmetadata](https://github.com/leetreveil/node-musicmetadata) reads tags, pure javascript
+ * [node-groove](https://github.com/andrewrk/node-groove) uses libav to read and write tags
 
 ## The Plan
 
